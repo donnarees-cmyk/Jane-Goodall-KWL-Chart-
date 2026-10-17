@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KWL Field Journal: Jane Goodall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ink:#2b3a2a; --paper:#f1e8d2; --card:#fbf6e8; --line:#d8cba4; --muted:#5e6a50;
+  --leaf:#5c8a4a; --forest:#2f5d3a; --grass-bg:#d6e8c6; --sun:#c9a227; --sun-bg:#efe0b6;
+  --focus:#1d5fa8; --bad:#a33a2a; --bad-bg:#f2d5c3;
+  --head:Georgia,"Times New Roman",serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--paper);background-image:radial-gradient(circle at 10% 6%,rgba(92,138,74,.16) 0,transparent 36%),radial-gradient(circle at 92% 88%,rgba(92,138,74,.16) 0,transparent 40%);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.55}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--head);line-height:1.15;margin:0}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+[hidden]{display:none!important}
+
+.hero{background:var(--forest);color:#fff;padding:22px 0 0;border-bottom:6px solid var(--sun)}
+.hero .brand{font-family:var(--head);font-size:1.05rem;color:#e6f0d8;margin:0 0 4px}
+.hero .small{margin:0 0 6px;color:#cfe0c0;font-size:.95rem}
+.hero h1{font-size:clamp(1.8rem,5.2vw,2.8rem);font-weight:700}
+.hero .name{display:flex;gap:10px;align-items:center;margin:14px 0 14px;flex-wrap:wrap}
+.hero label{color:#e6f0d8}
+.hero input{font:inherit;padding:8px 12px;border-radius:8px;border:2px solid #7fa56a;background:#244a2d;color:#fff;min-width:240px}
+.hero input::placeholder{color:#a9c79a}
+#saved{font-size:.9rem;color:#cfe0c0}
+
+.phases,.substeps{display:flex;gap:4px;list-style:none;margin:0;padding:0;overflow-x:auto}
+.phases button{font:inherit;cursor:pointer;border:0;background:#3c7048;color:#e6f0d8;padding:10px 14px;border-radius:10px 10px 0 0;white-space:nowrap}
+.phases button[aria-current="step"]{background:var(--paper);color:var(--ink);font-weight:700}
+.substeps{background:var(--paper);padding:8px 0 2px}
+.substeps button{font:inherit;cursor:pointer;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:5px 12px;border-radius:999px;white-space:nowrap}
+.substeps button[aria-current="step"]{background:var(--forest);color:#fff;border-color:var(--forest);font-weight:700}
+
+.tts{background:var(--card);border-bottom:2px dotted var(--leaf);padding:8px 0}
+.tts .wrap{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:.95rem}
+.tts select{font:inherit;padding:4px 8px;border:2px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+#voiceInfo{color:var(--muted);font-size:.85rem;flex-basis:100%}
+
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden;margin:16px 0 4px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--leaf),var(--sun));transition:width .3s}
+.pt{font-size:.92rem;color:var(--muted);margin-bottom:14px}
+
+.step{padding:6px 0 10px}
+.step>h2{font-size:1.8rem;margin:6px 0 4px}
+.lead{color:var(--muted);margin:0 0 14px}
+.card{background:var(--card);border:2px solid var(--line);border-left:10px solid var(--leaf);border-radius:14px;padding:16px 20px;margin-bottom:16px}
+.card h3{font-size:1.25rem;margin-bottom:6px}
+.card p{margin:.4em 0 .7em}
+.lesson{border-left-color:var(--forest)}
+.lessonhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.tip{background:var(--sun-bg);border-left:6px solid var(--sun);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0}
+.try{border-left-color:var(--sun)}
+.try>.qh3::before{content:"✏️ "}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.cols2{grid-template-columns:1fr}}
+.mini{border:2px solid var(--line);border-radius:12px;padding:10px 14px;background:#fffdf6}
+.mini b.h{display:block;font-family:var(--head);font-size:1.1rem;margin-bottom:2px}
+ul.clean{padding-left:20px;margin:6px 0}
+ul.clean li{margin-bottom:4px}
+.chipsrow{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.pill{border:2px solid var(--line);border-radius:999px;padding:3px 12px;background:#fffdf6;font-size:.95rem}
+.passage{background:#fffdf6;border:2px dashed var(--ink);border-radius:12px;padding:14px 18px;margin:12px 0;font-size:1.05rem}
+.passage .lab{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px}
+.remind{background:var(--sun-bg);border-radius:10px;padding:8px 14px;margin:0 0 16px}
+.remind summary{cursor:pointer;font-weight:700}
+.remind ul{margin:6px 0 4px;padding-left:20px}
+
+.mock{border:3px solid var(--ink);border-radius:12px;background:#fffdf6;padding:16px 18px;margin:12px 0}
+.mock h4{font-family:var(--head);font-size:1.5rem;margin:0 0 6px}
+.mock h5{font-family:var(--head);font-size:1.1rem;margin:12px 0 2px;color:var(--forest);border-bottom:2px solid var(--grass-bg)}
+.mock .sidebar{background:var(--sun-bg);border:2px solid var(--sun);border-radius:8px;padding:8px 12px;margin:10px 0;font-size:.97rem}
+.mock figure{margin:10px 0;text-align:center}
+.mock .pic{font-size:2.6rem;background:var(--grass-bg);border-radius:10px;padding:8px}
+.mock figcaption{font-size:.9rem;font-style:italic;color:var(--muted);margin-top:4px}
+.tag{display:inline-block;background:var(--ink);color:#fff;font-size:.75rem;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+
+.q{border-top:1px solid var(--line);padding:12px 0}
+.q:first-of-type{border-top:0}
+.qhead{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.qt{font-weight:700;margin:0 0 8px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts.row{flex-direction:row;flex-wrap:wrap}
+.opt{font:inherit;text-align:left;cursor:pointer;background:#fffdf6;color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:10px 14px;min-height:44px}
+.opt:hover:not(:disabled){background:var(--sun-bg);border-color:var(--sun)}
+.opt.sel{background:var(--sun-bg);border-color:var(--ink);font-weight:700}
+.opt.right{background:var(--grass-bg);border-color:var(--forest);color:var(--ink);font-weight:700;opacity:1}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);opacity:1;text-decoration:line-through}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.98rem}
+.fb.ok{background:var(--grass-bg);border-radius:8px;padding:8px 12px}
+.fb.no{background:var(--bad-bg);border-radius:8px;padding:8px 12px;color:#6b2518}
+
+.btn{font:inherit;cursor:pointer;border-radius:999px;border:2px solid var(--ink);background:#fffdf6;color:var(--ink);padding:7px 16px;text-decoration:none;display:inline-block}
+.btn:hover:not(:disabled){background:var(--sun-bg)}
+.btn.primary{background:var(--forest);border-color:var(--forest);color:#fff}
+.btn.primary:hover:not(:disabled){background:#3c7048}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.small{padding:3px 12px;font-size:.92rem}
+.listen{font:inherit;cursor:pointer;border:2px solid var(--forest);background:#fffdf6;color:var(--forest);border-radius:999px;padding:4px 12px;font-size:.92rem;white-space:nowrap;font-weight:700}
+.listen:hover{background:var(--grass-bg)}
+.navrow{display:flex;justify-content:space-between;gap:10px;margin:10px 0 40px}
+
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:10px 0}
+.vwrap{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.flip{font:inherit;text-align:left;cursor:pointer;border:2px solid var(--ink);border-radius:12px;padding:14px;background:#fffdf6;min-height:150px;color:var(--ink);width:100%}
+.flip .w{font-family:var(--head);font-size:1.45rem;font-weight:700}
+.flip .big{font-size:1.5rem}
+.flip .pos{font-size:.85rem;color:var(--muted)}
+.flip .back{display:none}
+.flip[aria-pressed="true"]{background:var(--grass-bg);border-color:var(--forest)}
+.flip[aria-pressed="true"] .front{display:none}
+.flip[aria-pressed="true"] .back{display:block}
+.flip .hint{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+textarea,select.f,input[type=text].f{font:inherit;color:var(--ink);width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:8px;background:#fffdf6}
+textarea{min-height:90px;resize:vertical}
+select.f{width:auto;min-width:200px}
+textarea:focus,select:focus{border-color:var(--focus)}
+label.f{display:block;font-weight:700;margin:12px 0 4px}
+.count{font-size:.9rem;color:var(--muted);margin-top:3px}
+.count.ok{color:var(--forest);font-weight:700}
+.checks{list-style:none;padding:0;margin:10px 0 0;line-height:1.8}
+.checks li::before{content:"○";display:inline-block;width:24px;color:var(--muted)}
+.checks li.ok::before{content:"✓";color:var(--forest);font-weight:700}
+.checks li.ok{color:var(--forest)}
+.conf{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:6px;align-items:center;margin:6px 0}
+.conf .c{font:inherit;cursor:pointer;border:2px solid var(--line);background:#fffdf6;border-radius:8px;padding:6px 4px;text-align:center;font-size:.92rem}
+.conf .c[aria-pressed="true"]{background:var(--grass-bg);border-color:var(--forest);font-weight:700}
+@media(max-width:600px){.conf{grid-template-columns:1fr 1fr 1fr}.conf>span{grid-column:1/-1;font-weight:700;margin-top:6px}}
+
+.result{border:3px solid var(--ink);border-radius:14px;padding:16px 18px;margin-top:16px;background:#fffdf6}
+.result .score{font-family:var(--head);font-size:2.2rem;font-weight:700}
+.sk{display:flex;justify-content:space-between;gap:10px;border-top:1px dashed var(--line);padding:6px 0;flex-wrap:wrap;align-items:center}
+.shot{border:3px solid var(--ink);border-radius:12px;background:#fffdf6;padding:18px 20px;margin-top:14px}
+.shot-head{border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:12px}
+.shot-item{margin-bottom:12px}
+.shot-item b{display:block;font-size:.95rem;color:var(--muted)}
+.shot-item p{margin:2px 0 0;white-space:pre-wrap}
+.warnbox{background:var(--sun-bg);border-left:6px solid var(--sun);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.finish{background:var(--grass-bg);border-left:6px solid var(--forest);border-radius:0 10px 10px 0;padding:14px 18px;margin-top:16px}
+.finish ol{margin:6px 0 0;padding-left:22px}
+ol.how{padding-left:22px}
+.gate{text-align:center;padding:26px 20px}
+.gate .big{font-size:3rem}
+.inkbar{background:#fffdf6;border-bottom:2px dotted var(--leaf);padding:8px 0}
+.inkbar .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:.95rem}
+.inkbar button{font:inherit;cursor:pointer;border:2px solid var(--line);background:#fffdf6;color:var(--ink);border-radius:999px;padding:4px 12px}
+.inkbar button[aria-pressed="true"]{background:var(--forest);border-color:var(--forest);color:#fff}
+.inkbar .sw{width:28px;height:28px;padding:0;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line)}
+.inkbar .sw[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ink);background-clip:padding-box}
+.inkbar .tog{display:flex;gap:6px;align-items:center;font-weight:700}
+.inkbar .hintline{flex-basis:100%;color:var(--muted);font-size:.85rem}
+.inkcard{border-left-color:var(--sun)}
+.inkhead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.inkhead .acts{display:flex;gap:6px}
+.inkhead button{font:inherit;cursor:pointer;border:2px solid var(--line);background:#fffdf6;color:var(--ink);border-radius:999px;padding:2px 10px;font-size:.9rem}
+.inkarea{position:relative;border:2px solid var(--ink);border-radius:10px;background-color:#fffffb;overflow:hidden}
+.inkarea.guide-lines{background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,#cdbf93 31px,#cdbf93 32px)}
+.glabels{position:absolute;inset:0;display:grid;pointer-events:none}
+.glabels.cols{grid-auto-flow:column;grid-auto-columns:1fr}
+.glabels.grid4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.glabels span{padding:4px 8px;font-weight:700;font-size:.85rem;color:var(--muted);border-right:2px solid var(--line);border-bottom:2px solid var(--line)}
+.glabels.cols span{border-bottom:2px solid var(--line)}
+.glabels span:last-child{border-right:0}
+.glabels.grid4 span:nth-child(2n){border-right:0}
+.glabels.grid4 span:nth-child(n+3){border-bottom:0}
+.inkcv{position:absolute;left:0;top:0;touch-action:none;z-index:2}
+.inkcv.over{pointer-events:none;z-index:6}
+body.annotate .inkcv.over{pointer-events:auto;cursor:crosshair}
+.card.lesson,.passage,.mock{position:relative}
+.inknote{font-size:.85rem;color:var(--muted);margin:6px 0 0}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.phases,.substeps,.tts,.inkbar,.inkhead .acts,.navrow,.btn,.listen,.hero .name{display:none!important}.step[hidden]{display:block!important}}
+
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.cols3{grid-template-columns:1fr}}
+.mini.k{border-top:6px solid #5c8a4a}.mini.w{border-top:6px solid #c9a227}.mini.l{border-top:6px solid #1d5fa8}
+.addrow{display:flex;gap:8px;margin:10px 0}
+.addrow input{flex:1;font:inherit;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:#fffdf6;color:var(--ink);min-width:0}
+.notes{display:grid;gap:10px;margin-top:10px}
+.note{border:2px solid var(--line);border-left:8px solid var(--leaf);border-radius:12px;padding:10px 14px;background:#fffdf6}
+.note.w{border-left-color:#c9a227}.note.l{border-left-color:#1d5fa8}
+.note .ntext{margin:0 0 6px;font-weight:600;white-space:pre-wrap}
+.note .ans{margin:6px 0;white-space:pre-wrap}
+.note textarea,.aform input.f{margin:6px 0}
+.nacts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.nbtn{font:inherit;cursor:pointer;border:2px solid var(--line);background:#fffdf6;color:var(--ink);border-radius:999px;padding:2px 10px;font-size:.9rem}
+.empty{color:var(--muted);font-style:italic;margin:6px 0}
+.badge{display:inline-block;border-radius:999px;padding:1px 10px;font-size:.85rem;font-weight:700;background:var(--sun-bg);margin:2px 6px 2px 0}
+.badge.ok{background:var(--grass-bg);color:var(--forest)}
+.checkrow{display:flex;gap:6px;flex-wrap:wrap}
+.checkrow .c{font:inherit;cursor:pointer;border:2px solid var(--line);background:#fffdf6;border-radius:999px;padding:4px 12px;font-size:.92rem}
+.checkrow .c[aria-pressed="true"]{background:var(--grass-bg);border-color:var(--forest);font-weight:700}
+.aform{margin-top:6px}
+.kwl{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){.kwl{grid-template-columns:1fr}}
+.kcol{border:3px solid var(--ink);border-radius:12px;padding:10px 12px;background:#fffffb}
+.kcol h4{font-family:var(--head);margin:0 0 8px;font-size:1.05rem}
+.kcol.k{border-top:10px solid #5c8a4a}.kcol.w{border-top:10px solid #c9a227}.kcol.l{border-top:10px solid #1d5fa8}
+.citem{border-top:1px dashed var(--line);padding:6px 0}
+.citem p{margin:0;white-space:pre-wrap}
+.lcard .note{margin-top:10px}
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="brand">🌿🐒🌿 Explorer’s Field Journal</p>
+    <p class="small">Grade 6 ELA · Unit 2 · Before and after reading “My Life with the Chimpanzees”</p>
+    <h1>KWL Chart: Jane Goodall 🐒</h1>
+    <div class="name">
+      <label for="studentName">Your name</label>
+      <input type="text" id="studentName" placeholder="First and last name" autocomplete="off">
+      <span id="saved" aria-live="polite"></span>
+    </div>
+    <ul class="phases" id="phases" aria-label="Parts of the chart"></ul>
+  </div>
+</header>
+<div class="wrap"><ul class="substeps" id="substeps" aria-label="Steps in this part"></ul></div>
+
+<div class="tts">
+  <div class="wrap">
+    <span>🔊 <b>Read aloud</b></span>
+    <label>Voice <select id="voiceSel"><option value="google">Google voice (best available)</option><option value="male">Male voice</option><option value="mixed">Mixed (teaching male, notes female)</option></select></label>
+    <label>Speed <select id="speedSel"><option value="0.85">Slow</option><option value="0.95" selected>Normal</option><option value="1.1">Fast</option></select></label>
+    <button type="button" class="btn small" id="stopBtn">⏹ Stop</button>
+    <span id="voiceInfo"></span>
+  </div>
+</div>
+
+<div class="inkbar">
+  <div class="wrap">
+    <b>✏️ Pen</b>
+    <span id="toolBtns"><button type="button" data-tool="pen" aria-pressed="true">✏️ Pen</button> <button type="button" data-tool="hl" aria-pressed="false">🖍️ Highlighter</button> <button type="button" data-tool="erase" aria-pressed="false">🧽 Eraser</button></span>
+    <span id="swatches" style="display:flex;gap:8px;align-items:center"></span>
+    <span id="sizeBtns"><button type="button" data-size="0" aria-pressed="false" aria-label="Thin">•</button> <button type="button" data-size="1" aria-pressed="true" aria-label="Medium">●</button> <button type="button" data-size="2" aria-pressed="false" aria-label="Thick">⬤</button></span>
+    <button type="button" id="undoBtn">↩️ Undo</button>
+    <span class="hintline">Type your notes, or write and draw in the boxes with your Apple Pencil or stylus. Both count.</span>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  <div class="pt" id="ptext"></div>
+
+<!-- 0 START -->
+<section class="step" data-phase="start" data-title="Start" hidden>
+  <h2>🎯 Start here</h2>
+  <p class="lead">Before you read “My Life with the Chimpanzees,” think about its author, Jane Goodall. A KWL chart helps you plan and track your learning.</p>
+
+  <div class="card lesson">
+    <div class="lessonhead"><h3>What is a KWL chart?</h3><button type="button" class="listen" data-listen="card">🔊 Listen</button></div>
+    <div class="cols3">
+      <div class="mini k"><b class="h">K: What I Know</b>Things I already know or think I know.</div>
+      <div class="mini w"><b class="h">W: What I Want to know</b>Questions I am curious about.</div>
+      <div class="mini l"><b class="h">L: What I Learned</b>Answers and new ideas I find after reading.</div>
+    </div>
+    <ol class="how" style="margin-top:12px">
+      <li>🌱 <b>Before you read:</b> fill in the K and W columns.</li>
+      <li>📖 <b>While you read:</b> look for answers to your questions.</li>
+      <li>🔍 <b>After you read:</b> fill in the L column and check your K notes.</li>
+      <li>📸 <b>Turn it in:</b> take a screenshot of your chart and upload it to Canvas.</li>
+    </ol>
+    <p class="tip">🔊 Tap the speaker to hear any part read aloud. ✏️ You can type notes or write and draw with your Apple Pencil. Your work saves on this iPad.</p>
+  </div>
+</section>
+
+<!-- 1 K -->
+<section class="step" data-phase="know" data-title="K: Know" data-emoji="🌱" hidden>
+  <h2>🌱 K: What I already know</h2>
+  <div class="card lesson kcard">
+    <div class="lessonhead"><h3>What do I know about Jane Goodall, chimpanzees, or scientists who study animals?</h3><button type="button" class="listen" data-listen="card">🔊 Listen</button></div>
+    <p>Write one idea at a time. It is okay if you are not sure. You will check these notes after you read.</p>
+    <div class="chipsrow" id="kStarters">
+      <button type="button" class="btn small">I know that</button>
+      <button type="button" class="btn small">I think that</button>
+      <button type="button" class="btn small">I have heard that</button>
+    </div>
+    <div class="addrow"><input type="text" id="kIn" maxlength="220" placeholder="Type one thing you know" aria-label="Something I know"><button type="button" class="btn primary" id="kAdd">Add</button></div>
+    <div class="fb no" id="kErr" role="alert" hidden></div>
+    <div id="kList" class="notes"></div>
+    <p class="count" id="kCount"></p>
+  </div>
+  <div class="card inkcard"><div class="inkbox" data-id="k-ink" data-label="✏️ Write or draw what I know" data-guide="lines" data-h="200" data-labels=""></div><p class="inknote">Write or draw here with your Apple Pencil. Your teacher can use this box for a class chart.</p></div>
+</section>
+
+<!-- 2 W -->
+<section class="step" data-phase="want" data-title="W: Want to know" data-emoji="❓" hidden>
+  <h2>❓ W: What I want to know</h2>
+  <div class="card lesson wcard">
+    <div class="lessonhead"><h3>What questions do I have?</h3><button type="button" class="listen" data-listen="card">🔊 Listen</button></div>
+    <p>Good questions start with <b>Who, What, Where, When, Why,</b> or <b>How</b>. You will look for the answers while you read.</p>
+    <div class="chipsrow" id="wStarters">
+      <button type="button" class="btn small">Who</button><button type="button" class="btn small">What</button><button type="button" class="btn small">Where</button><button type="button" class="btn small">When</button><button type="button" class="btn small">Why</button><button type="button" class="btn small">How</button>
+    </div>
+    <div class="addrow"><input type="text" id="wIn" maxlength="220" placeholder="Type one question" aria-label="A question I have"><button type="button" class="btn primary" id="wAdd">Add</button></div>
+    <div class="fb no" id="wErr" role="alert" hidden></div>
+    <div id="wList" class="notes"></div>
+    <p class="count" id="wCount"></p>
+  </div>
+  <div class="card inkcard"><div class="inkbox" data-id="w-ink" data-label="✏️ Write or draw my questions" data-guide="lines" data-h="200" data-labels=""></div><p class="inknote">Write or draw here with your Apple Pencil.</p></div>
+</section>
+
+<!-- 3 L -->
+<section class="step" data-phase="learn" data-title="L: Learned" data-emoji="💡" hidden>
+  <h2>💡 L: What I learned</h2>
+  <p class="lead">Do this <b>after</b> you read “My Life with the Chimpanzees.” Use your own words.</p>
+
+  <div class="card lesson lcard">
+    <div class="lessonhead"><h3>1. Answer my questions</h3><button type="button" class="listen" data-listen="card">🔊 Listen</button></div>
+    <p>Look at your W questions. Tap <b>I found the answer</b> and write what you learned. Still curious? Look in reliable sources, like you practiced on Day 3.</p>
+    <div id="lAnswers"></div>
+  </div>
+
+  <div class="card lesson lcard">
+    <div class="lessonhead"><h3>2. Check what I knew</h3><button type="button" class="listen" data-listen="card">🔊 Listen</button></div>
+    <p>Look at your K notes. Was each one right?</p>
+    <div id="lChecks"></div>
+  </div>
+
+  <div class="card lesson lcard">
+    <div class="lessonhead"><h3>3. More things I learned</h3><button type="button" class="listen" data-listen="card">🔊 Listen</button></div>
+    <div class="chipsrow" id="lStarters">
+      <button type="button" class="btn small">I learned that</button>
+      <button type="button" class="btn small">I was surprised that</button>
+      <button type="button" class="btn small">A new word I learned is</button>
+    </div>
+    <div class="addrow"><input type="text" id="lIn" maxlength="260" placeholder="Type something you learned" aria-label="Something I learned"><button type="button" class="btn primary" id="lAdd">Add</button></div>
+    <div class="fb no" id="lErr" role="alert" hidden></div>
+    <div id="lList" class="notes"></div>
+  </div>
+  <div class="card inkcard"><div class="inkbox" data-id="l-ink" data-label="✏️ Write or draw what I learned" data-guide="lines" data-h="200" data-labels=""></div><p class="inknote">Write or draw here with your Apple Pencil.</p></div>
+</section>
+
+<!-- 4 CHART -->
+<section class="step" data-phase="chart" data-title="My Chart" data-emoji="📸" hidden>
+  <h2>📸 My KWL chart</h2>
+  <p class="lead">Here is your whole chart in one place. Check it, then turn it in.</p>
+  <div class="card">
+    <div class="lessonhead"><h3>My chart</h3><button type="button" class="listen" id="readChart">🔊 Read my chart aloud</button></div>
+    <p class="count" id="chartCount"></p>
+    <div class="kwl" id="chart"></div>
+  </div>
+  <div class="card"><h3>1. Check your work</h3><ul class="checks" id="turnChecks" aria-live="polite"></ul></div>
+  <div class="card">
+    <h3>2. Open your screenshot page</h3>
+    <p>This page puts your name, your chart, and your handwriting in one place.</p>
+    <button class="btn primary" id="showShot" type="button">Show my work</button>
+    <div id="shot" class="shot" hidden></div>
+  </div>
+  <div class="card">
+    <h3>3. Take your screenshot 📸</h3>
+    <p>On your iPad: press the <b>top button and the volume-up button</b> at the same time. (iPad with a Home button? Press the <b>top button and Home</b>.) Tap the little picture in the corner, tap <b>Done</b>, then <b>Save to Photos</b>. Long page? Scroll and take more than one screenshot.</p>
+  </div>
+  <div class="card">
+    <h3>4. Upload it to Canvas 📤</h3>
+    <ol class="how">
+      <li>🖥️ Open Canvas and go to our class.</li>
+      <li>📁 Open this assignment.</li>
+      <li>📤 Tap <b>Submit Assignment</b>, then <b>Choose File</b>, then <b>Photo Library</b>, and pick your screenshot.</li>
+      <li>✅ Tap <b>Submit Assignment</b> again and look for the green “Submitted” message.</li>
+    </ol>
+    <p style="margin-top:10px"><a class="btn primary" id="canvasLink" target="_blank" rel="noopener" hidden>Open the Canvas assignment</a></p>
+    <div class="finish">
+      <b>🎉 Finished? Here is what to do next!</b>
+      <ol>
+        <li>✅ Make sure your screenshot is uploaded to Canvas.</li>
+        <li>📚 Then open the <b>Canvas module</b> and work on any other activities posted for you.</li>
+      </ol>
+      <p style="margin:6px 0 0">✋ Not sure what to do? Ask your teacher!</p>
+    </div>
+  </div>
+</section>
+
+  <div class="navrow">
+    <button class="btn" id="backBtn" type="button">← Back</button>
+    <button class="btn primary" id="nextBtn" type="button">Next →</button>
+  </div>
+  <p style="color:var(--muted);font-size:.9rem;margin-bottom:30px">Teacher-made activity.
+    <button class="btn small" id="clearAll" type="button" style="margin-left:8px">Clear my work</button></p>
+</main>
+
+<script>
+(function(){
+  var KEY='kwl-goodall-field-v1';
+  /* TEACHER: paste your Canvas assignment link between the quotes (must start with https://).
+     Or share this page as  yourpage.html?canvas=https://... */
+  var CANVAS_URL='';
+
+  /* ---------- state ---------- */
+  var S={name:'',step:0,t:{},c:{},ink:{},k:[],w:[],l:[],n:0};
+  try{ var raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw)); }catch(e){}
+  ['t','c','ink'].forEach(function(k){ S[k]=S[k]||{}; });
+  ['k','w','l'].forEach(function(k){ S[k]=S[k]||[]; });
+  var savedEl=document.getElementById('saved'), tmr=null;
+  function save(){
+    clearTimeout(tmr);
+    tmr=setTimeout(function(){
+      try{ localStorage.setItem(KEY,JSON.stringify(S)); savedEl.textContent='Saved on this iPad'; }
+      catch(e){ savedEl.textContent='Could not save here. Do not close this page.'; }
+    },250);
+  }
+  function h(tag,attrs,kids){
+    var el=document.createElement(tag);
+    if(attrs) Object.keys(attrs).forEach(function(k){
+      if(k==='class') el.className=attrs[k];
+      else if(k==='text') el.textContent=attrs[k];
+      else if(k.slice(0,2)==='on') el.addEventListener(k.slice(2),attrs[k]);
+      else el.setAttribute(k,attrs[k]);
+    });
+    (kids||[]).forEach(function(c){ el.appendChild(c); });
+    return el;
+  }
+  function $(id){ return document.getElementById(id); }
+  function words(s){ s=(s||'').trim(); return s?s.split(/\s+/).length:0; }
+  function uid(){ S.n=(S.n||0)+1; return 'n'+S.n; }
+
+  /* ---------- read aloud (prefers a Google voice when the device has one) ---------- */
+  var voices=[];
+  function loadVoices(){ voices=('speechSynthesis' in window)?(window.speechSynthesis.getVoices()||[]):[]; info(); }
+  if('speechSynthesis' in window){ loadVoices(); window.speechSynthesis.onvoiceschanged=loadVoices; }
+  function vScore(v,g){
+    var n=v.name, s=0;
+    if(!/^en/i.test(v.lang)) return -100;
+    if(/en[-_]US/i.test(v.lang)) s+=3;
+    var fem=/(female|samantha|ava\b|allison|aria|jenny|karen|zira|susan|serena|moira|victoria|nicky|google us english|google uk english female)/i.test(n);
+    var mal=!fem&&/(daniel|alex\b|aaron|fred\b|guy\b|davis|tom\b|david|mark\b|george|ryan|james|\bmale\b)/i.test(n);
+    if(g==='male'){ if(mal) s+=10; else if(fem) s-=10; } else { if(fem) s+=10; else if(mal) s-=10; }
+    if(/google/i.test(n)) s+=6;
+    if(/natural|neural|premium|enhanced|siri/i.test(n)) s+=8;
+    if(/compact|espeak|novelty|whisper|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|zarvox|albert|junior|kathy|ralph/i.test(n)) s-=30;
+    return s;
+  }
+  function best(g){ var b=null, bs=-999; voices.forEach(function(v){ var s=vScore(v,g); if(s>bs){ bs=s; b=v; } }); return b; }
+  function genderFor(role){ var m=$('voiceSel').value; if(m==='male') return 'male'; if(m==='mixed') return role==='q'?'female':'male'; return 'female'; }
+  function info(){
+    var v=best(genderFor('lesson')), el=$('voiceInfo');
+    if(!voices.length){ el.textContent='Read aloud uses the voices on this device.'; return; }
+    el.textContent=v&&/google/i.test(v.name)?'Using the Google voice: '+v.name+'.':'Google voices are not on this iPad, so the best natural voice here is used: '+(v?v.name:'default')+'.';
+  }
+  $('voiceSel').addEventListener('change',info);
+  function clean(t){ return (t||'').replace(/\p{Extended_Pictographic}|\uFE0F|\u200D|[\u2750-\u2767\u275D\u275E]/gu,'').replace(/\b[A-Z]{2,}\b/g,function(w){ if(w==='KWL') return 'K W L'; return w==='ELA'?w:w.toLowerCase(); }).replace(/_+/g,' blank ').replace(/["“”]/g,'').replace(/\s+/g,' ').trim(); }
+  function sentence(t){ t=clean(t); if(!t) return ''; return /[.!?:;]$/.test(t)?t:t+'.'; }
+  function stopSpeech(){ if('speechSynthesis' in window) window.speechSynthesis.cancel(); }
+  function speak(text,role){
+    if(!('speechSynthesis' in window)) return;
+    stopSpeech();
+    var v=best(genderFor(role)), rate=parseFloat($('speedSel').value)||0.95;
+    (text.match(/[^.!?]+[.!?]*/g)||[text]).forEach(function(c){
+      c=c.trim(); if(!c) return;
+      var u=new SpeechSynthesisUtterance(c);
+      if(v){ u.voice=v; u.lang=v.lang; } else u.lang='en-US';
+      u.rate=rate; window.speechSynthesis.speak(u);
+    });
+  }
+  $('stopBtn').addEventListener('click',stopSpeech);
+  function cardText(card){
+    var parts=[];
+    card.querySelectorAll('h3, p, li, .mini, .chipsrow, .cer > div, .formula .box').forEach(function(n){
+      var isBox=n.classList.contains('mini')||n.classList.contains('box');
+      if(!isBox && n.closest('.mini, .box')) return;
+      if(n.closest('.notes, .note, .addrow, #lAnswers, #lChecks, #lList, #kStarters, #wStarters, #lStarters, .fb')||n.classList.contains('count')||n.classList.contains('empty')) return;
+      var t;
+      if(n.classList.contains('chipsrow')){
+        t=Array.prototype.map.call(n.children,function(c){ return c.textContent.trim(); }).join(', ');
+      } else if(isBox){
+        var hd=n.querySelector('b.h')||n.querySelector('b');
+        t=hd ? sentence(hd.textContent)+' '+sentence(n.textContent.slice(n.textContent.indexOf(hd.textContent)+hd.textContent.length)) : n.textContent;
+      } else { t=n.textContent; }
+      parts.push(sentence(t.replace(/Listen to this lesson|Listen/g,'')));
+    });
+    return parts.join(' ');
+  }
+  function listenBtn(getText,role,label){
+    return h('button',{type:'button',class:'listen','aria-label':'Read aloud',text:label||'🔊',onclick:function(){ speak(getText(),role||'q'); }});
+  }
+  function qSpeech(q){
+    return sentence(q.q)+' '+q.o.map(function(t,i){ return 'Choice '+String.fromCharCode(65+i)+'. '+sentence(t); }).join(' ');
+  }
+  /* wire the static "Listen" buttons in the HTML */
+  document.querySelectorAll('.listen[data-listen]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var key=b.dataset.listen, role='lesson';
+      if(key==='card'){ speak(cardText(b.closest('.card')),role); return; }
+      var el=document.getElementById(key); if(!el) return;
+      if(el.classList.contains('mock')){
+        var parts=[]; el.querySelectorAll('h4, h5, p, figcaption, .sidebar').forEach(function(n){ parts.push(sentence(n.textContent)); });
+        speak(parts.join(' '),'q');
+      } else { var pt=el.querySelector('.ptext'); speak(sentence(pt?pt.textContent:el.textContent),'q'); }
+    });
+  });
+
+  /* ---------- ink: write with an Apple Pencil or stylus ---------- */
+  var INK={tool:'pen',color:'#1b1b1b',size:1,annotate:false,penSeen:false,last:null};
+  var PEN_C=['#1b1b1b','#1d5fa8','#b3261e','#2f7d32','#7b3fa0'], HL_C=['#ffe14d','#ff9bd0','#9be564','#7fd3ff'];
+  var PEN_W=[1.6,2.6,4.5], HL_W=[12,18,26];
+  var inkAll=[], inkBoxes=[];
+  function drawStroke(ctx,W,H,s){
+    var pts=s.p; if(!pts||!pts.length) return;
+    ctx.lineCap='round'; ctx.lineJoin='round';
+    if(s.t==='hl'){
+      ctx.save(); ctx.globalAlpha=0.35; ctx.strokeStyle=s.c; ctx.lineWidth=s.w; ctx.beginPath();
+      ctx.moveTo(pts[0][0]*W,pts[0][1]*H);
+      for(var i=1;i<pts.length;i++) ctx.lineTo(pts[i][0]*W,pts[i][1]*H);
+      if(pts.length===1) ctx.lineTo(pts[0][0]*W+0.1,pts[0][1]*H);
+      ctx.stroke(); ctx.restore(); return;
+    }
+    ctx.strokeStyle=s.c; ctx.fillStyle=s.c;
+    if(pts.length===1){ ctx.beginPath(); ctx.arc(pts[0][0]*W,pts[0][1]*H,s.w*(0.5+pts[0][2])/2,0,6.2832); ctx.fill(); return; }
+    for(var j=1;j<pts.length;j++){
+      var a=pts[j-1], b=pts[j];
+      ctx.lineWidth=s.w*(0.5+(a[2]+b[2])/2);
+      ctx.beginPath(); ctx.moveTo(a[0]*W,a[1]*H); ctx.lineTo(b[0]*W,b[1]*H); ctx.stroke();
+    }
+  }
+  function InkCanvas(host,id,overlay){
+    var cv=document.createElement('canvas'); cv.className='inkcv'+(overlay?' over':''); host.appendChild(cv);
+    var ctx=cv.getContext('2d'), strokes=S.ink[id]||(S.ink[id]=[]);
+    var W=1,H=1,dpr=Math.max(1,window.devicePixelRatio||1), cur=null, pid=null, erasing=false, changed=false;
+    function size(){
+      var r=host.getBoundingClientRect(), w=Math.max(1,Math.round(r.width)), hh=Math.max(1,Math.round(r.height));
+      if(w===W&&hh===H&&cv.width) return;
+      W=w; H=hh; cv.width=Math.round(w*dpr); cv.height=Math.round(hh*dpr); cv.style.width=w+'px'; cv.style.height=hh+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0); redraw();
+    }
+    function redraw(){ ctx.clearRect(0,0,W,H); strokes.forEach(function(s){ drawStroke(ctx,W,H,s); }); }
+    function addPoint(e,r){
+      var pr=e.pointerType==='pen'?Math.max(0.15,e.pressure||0.5):0.5;
+      var nx=(e.clientX-r.left)/W, ny=(e.clientY-r.top)/H, last=cur.p[cur.p.length-1];
+      if(last&&Math.abs(last[0]-nx)*W<1.2&&Math.abs(last[1]-ny)*H<1.2) return;
+      cur.p.push([+nx.toFixed(4),+ny.toFixed(4),+pr.toFixed(2)]);
+      if(cur.t==='hl'){ redraw(); drawStroke(ctx,W,H,cur); }
+      else if(cur.p.length>1){ drawStroke(ctx,W,H,{t:'pen',c:cur.c,w:cur.w,p:cur.p.slice(-2)}); }
+      else drawStroke(ctx,W,H,cur);
+    }
+    function eraseAt(x,y){
+      for(var i=strokes.length-1;i>=0;i--){
+        if(strokes[i].p.some(function(q){ var dx=q[0]*W-x, dy=q[1]*H-y; return dx*dx+dy*dy<196; })){ strokes.splice(i,1); changed=true; }
+      }
+      if(changed) redraw();
+    }
+    cv.addEventListener('pointerdown',function(e){
+      if(overlay&&!INK.annotate) return;
+      if(e.pointerType==='pen') INK.penSeen=true;
+      if(e.pointerType==='touch'&&INK.penSeen) return;     /* palm rejection once a Pencil is in use */
+      if(pid!==null) return;
+      e.preventDefault(); pid=e.pointerId; INK.last=inst;
+      try{ cv.setPointerCapture(pid); }catch(err){}
+      var r=cv.getBoundingClientRect();
+      if(INK.tool==='erase'){ erasing=true; changed=false; eraseAt(e.clientX-r.left,e.clientY-r.top); return; }
+      var hl=INK.tool==='hl';
+      cur={t:hl?'hl':'pen',c:INK.color,w:(hl?HL_W:PEN_W)[INK.size],p:[]};
+      addPoint(e,r);
+    });
+    cv.addEventListener('pointermove',function(e){
+      if(e.pointerId!==pid) return;
+      var r=cv.getBoundingClientRect();
+      if(erasing){ eraseAt(e.clientX-r.left,e.clientY-r.top); return; }
+      if(!cur) return;
+      var evs=(e.getCoalescedEvents&&e.getCoalescedEvents())||[]; if(!evs.length) evs=[e];
+      evs.forEach(function(ev){ addPoint(ev,r); });
+    });
+    function end(e){
+      if(e.pointerId!==pid) return;
+      if(cur&&cur.p.length){ strokes.push(cur); save(); }
+      if(erasing&&changed) save();
+      cur=null; pid=null; erasing=false; changed=false;
+    }
+    cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end);
+    var inst={id:id,size:size,redraw:redraw,
+      undo:function(){ if(strokes.length){ strokes.pop(); redraw(); save(); } },
+      clear:function(){ strokes.length=0; redraw(); save(); }};
+    inkAll.push(inst); size();
+    if(window.ResizeObserver) new ResizeObserver(size).observe(host);
+    return inst;
+  }
+  function inkResize(){ inkAll.forEach(function(i){ i.size(); }); }
+  function inkImage(id,w,hh){
+    var strokes=S.ink[id]||[]; if(!strokes.length) return null;
+    var cv=document.createElement('canvas'); cv.width=w*2; cv.height=hh*2;
+    var ctx=cv.getContext('2d'); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,cv.width,cv.height); ctx.scale(2,2);
+    strokes.forEach(function(s){ drawStroke(ctx,w,hh,s); });
+    var img=new Image(); img.src=cv.toDataURL('image/png'); img.alt='Handwritten notes'; img.style.width='100%'; img.style.border='1px solid #d8cba4';
+    return img;
+  }
+  function initInk(){
+    /* writing boxes (teacher and students can both write in them) */
+    document.querySelectorAll('.inkbox').forEach(function(el){
+      var id=el.dataset.id, hgt=parseInt(el.dataset.h,10)||220, guide=el.dataset.guide||'lines', labels=(el.dataset.labels||'').split('|').filter(Boolean), title=el.dataset.label||'✏️ Write here';
+      var area=h('div',{class:'inkarea guide-'+guide}); area.style.height=hgt+'px';
+      if(labels.length&&(guide==='cols'||guide==='grid4')){
+        var g=h('div',{class:'glabels '+guide}); labels.forEach(function(t){ g.appendChild(h('span',{text:t})); }); area.appendChild(g);
+      }
+      var inst=null, clr=null;
+      var undoB=h('button',{type:'button',text:'↩️ Undo',onclick:function(){ inst.undo(); }});
+      clr=h('button',{type:'button',text:'🗑️ Clear',onclick:function(){
+        if(clr.dataset.armed){ inst.clear(); delete clr.dataset.armed; clr.textContent='🗑️ Clear'; }
+        else{ clr.dataset.armed='1'; clr.textContent='Tap again to erase'; setTimeout(function(){ delete clr.dataset.armed; clr.textContent='🗑️ Clear'; },3000); }
+      }});
+      el.appendChild(h('div',{class:'inkhead'},[h('b',{text:title}),h('span',{class:'acts'},[undoB,clr])]));
+      el.appendChild(area);
+      inst=InkCanvas(area,id,false);
+      inkBoxes.push({id:id,label:title.replace(/^✏️\s*/,''),h:hgt,labels:labels});
+    });
+    /* mark-up layers on top of the lessons and passages (turned on with the "Mark up the page" switch) */
+    document.querySelectorAll('.step[data-phase="teach"] .card.lesson').forEach(function(card,i){ InkCanvas(card,'ov-lesson'+i,true); });
+    ['passage1','passage2','passage3'].forEach(function(id){ var el=$(id); if(el) InkCanvas(el,'ov-'+id,true); });
+    /* tool bar */
+    function renderTools(){
+      Array.prototype.forEach.call(document.querySelectorAll('#toolBtns button'),function(b){ b.setAttribute('aria-pressed',b.dataset.tool===INK.tool?'true':'false'); });
+      Array.prototype.forEach.call(document.querySelectorAll('#sizeBtns button'),function(b){ b.setAttribute('aria-pressed',parseInt(b.dataset.size,10)===INK.size?'true':'false'); });
+      var sw=$('swatches'); sw.innerHTML='';
+      if(INK.tool==='erase'){ sw.appendChild(document.createTextNode('Drag over a mark to erase it')); return; }
+      var cols=INK.tool==='hl'?HL_C:PEN_C; if(cols.indexOf(INK.color)<0) INK.color=cols[0];
+      cols.forEach(function(c){
+        var b=h('button',{type:'button',class:'sw','aria-label':'Color '+c,'aria-pressed':c===INK.color?'true':'false'}); b.style.background=c;
+        b.addEventListener('click',function(){ INK.color=c; renderTools(); }); sw.appendChild(b);
+      });
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('#toolBtns button'),function(b){ b.addEventListener('click',function(){ INK.tool=b.dataset.tool; renderTools(); }); });
+    Array.prototype.forEach.call(document.querySelectorAll('#sizeBtns button'),function(b){ b.addEventListener('click',function(){ INK.size=parseInt(b.dataset.size,10); renderTools(); }); });
+    $('undoBtn').addEventListener('click',function(){ if(INK.last) INK.last.undo(); });
+    if($('annoBox')) $('annoBox').addEventListener('change',function(){ INK.annotate=this.checked; document.body.classList.toggle('annotate',this.checked); });
+    renderTools();
+  }
+
+  /* ---------- name ---------- */
+  var nameEl=$('studentName'); nameEl.value=S.name||'';
+  nameEl.addEventListener('input',function(){ S.name=nameEl.value; save(); renderChecks(); });
+
+  /* ---------- steps ---------- */
+  var steps=Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var PH=[{id:'start',label:'🎯 Start'},{id:'know',label:'🌱 K'},{id:'want',label:'❓ W'},{id:'learn',label:'💡 L'},{id:'chart',label:'📸 My chart'}];
+  var phasesEl=$('phases'), subEl=$('substeps');
+  PH.forEach(function(p){
+    var first=steps.findIndex(function(s){ return s.dataset.phase===p.id; });
+    var b=h('button',{type:'button','data-ph':p.id,text:p.label});
+    b.addEventListener('click',function(){ show(first); });
+    phasesEl.appendChild(h('li',{},[b]));
+  });
+  function show(i){
+    i=Math.max(0,Math.min(steps.length-1,i));
+    stopSpeech();
+    steps.forEach(function(s,j){ s.hidden=j!==i; });
+    var ph=steps[i].dataset.phase;
+    Array.prototype.forEach.call(phasesEl.querySelectorAll('button'),function(b){ if(b.dataset.ph===ph) b.setAttribute('aria-current','step'); else b.removeAttribute('aria-current'); });
+    $('backBtn').disabled=i===0; $('nextBtn').disabled=i===steps.length-1;
+    S.step=i; save(); window.scrollTo({top:0});
+    if(ph==='learn'){ renderL(); } if(ph==='chart'){ renderChart(); renderChecks(); }
+    setTimeout(inkResize,0);
+  }
+  $('backBtn').addEventListener('click',function(){ show(S.step-1); });
+  $('nextBtn').addEventListener('click',function(){ show(S.step+1); });
+
+  /* ---------- note cards (typed notes you can listen to, edit, and delete) ---------- */
+  function twoTap(btn,label,action){
+    btn.addEventListener('click',function(){
+      if(btn.dataset.armed){ action(); return; }
+      btn.dataset.armed='1'; btn.textContent='Tap again'; setTimeout(function(){ delete btn.dataset.armed; btn.textContent=label; },3000);
+    });
+  }
+  function noteCard(text,cls,onSave,onDelete,extras){
+    var card=h('div',{class:'note '+(cls||'')});
+    var p=h('p',{class:'ntext',text:text});
+    var acts=h('div',{class:'nacts'});
+    acts.appendChild(listenBtn(function(){ return text; },'q','🔊'));
+    var edit=h('button',{type:'button',class:'nbtn','aria-label':'Edit',text:'✏️ Edit'});
+    var del=h('button',{type:'button',class:'nbtn','aria-label':'Delete',text:'🗑️'}); twoTap(del,'🗑️',onDelete);
+    edit.addEventListener('click',function(){
+      var ta=h('textarea',{'aria-label':'Edit note',style:'min-height:64px'}); ta.value=text;
+      var ok=h('button',{type:'button',class:'btn small primary',text:'Save'}), no=h('button',{type:'button',class:'btn small',text:'Cancel'});
+      ok.addEventListener('click',function(){ var v=ta.value.trim(); if(v) onSave(v); });
+      no.addEventListener('click',function(){ renderAll(); });
+      card.innerHTML=''; card.appendChild(ta); card.appendChild(h('div',{class:'nacts'},[ok,no])); ta.focus();
+    });
+    acts.appendChild(edit); acts.appendChild(del);
+    card.appendChild(p); (extras||[]).forEach(function(x){ card.appendChild(x); }); card.appendChild(acts);
+    return card;
+  }
+  function addNote(arr,inputId,errId,min){
+    var el=$(inputId), v=el.value.trim(), er=$(errId);
+    if(words(v)<min){ er.textContent='Write a little more first. Try at least '+min+' words.'; er.hidden=false; return; }
+    er.hidden=true; arr.push({id:uid(),text:v}); el.value=''; save(); renderAll(); el.focus();
+  }
+  function starters(boxId,inputId){
+    Array.prototype.forEach.call(document.querySelectorAll('#'+boxId+' button'),function(b){
+      b.addEventListener('click',function(){ var el=$(inputId); el.value=b.textContent+' '; el.focus(); });
+    });
+  }
+  function wire(addId,inputId,arr,errId,min){
+    $(addId).addEventListener('click',function(){ addNote(S[arr],inputId,errId,min); });
+    $(inputId).addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); addNote(S[arr],inputId,errId,min); } });
+  }
+  wire('kAdd','kIn','k','kErr',2); wire('wAdd','wIn','w','wErr',3); wire('lAdd','lIn','l','lErr',3);
+  starters('kStarters','kIn'); starters('wStarters','wIn'); starters('lStarters','lIn');
+
+  function empty(msg){ return h('p',{class:'empty',text:msg}); }
+  function renderK(){
+    var box=$('kList'); box.innerHTML='';
+    if(!S.k.length) box.appendChild(empty('Nothing here yet. Add your first idea above.'));
+    S.k.forEach(function(n){
+      box.appendChild(noteCard(n.text,'k',function(v){ n.text=v; save(); renderAll(); },function(){ S.k=S.k.filter(function(x){ return x!==n; }); save(); renderAll(); }));
+    });
+    $('kCount').textContent=S.k.length+(S.k.length===1?' idea':' ideas')+' so far. Try for at least 3.';
+  }
+  function renderW(){
+    var box=$('wList'); box.innerHTML='';
+    if(!S.w.length) box.appendChild(empty('No questions yet. Add your first question above.'));
+    S.w.forEach(function(n){
+      var extras=n.done?[h('span',{class:'badge ok',text:'✅ Answered'})]:[];
+      box.appendChild(noteCard(n.text,'w',function(v){ n.text=v; save(); renderAll(); },function(){ S.w=S.w.filter(function(x){ return x!==n; }); save(); renderAll(); },extras));
+    });
+    $('wCount').textContent=S.w.length+(S.w.length===1?' question':' questions')+' so far. Try for at least 3.';
+  }
+
+  /* ---------- L step: answer questions, check K notes, add more ---------- */
+  function renderL(){
+    var a=$('lAnswers'); a.innerHTML='';
+    if(!S.w.length) a.appendChild(empty('You have no questions yet. Go back to W to add some.'));
+    S.w.forEach(function(n){
+      var card=h('div',{class:'note w'}); card.appendChild(h('p',{class:'ntext',text:n.text}));
+      card.appendChild(h('div',{class:'nacts'},[listenBtn(function(){ return n.text; },'q','🔊')]));
+      var form=h('div',{class:'aform'}); form.hidden=!!n.done;
+      var ta=h('textarea',{'aria-label':'My answer',placeholder:'Write the answer in your own words',style:'min-height:64px'}); ta.value=n.answer||'';
+      var src=h('input',{type:'text',class:'f','aria-label':'Where I found it',placeholder:'Where I found it (optional)'}); src.value=n.source||'';
+      var okb=h('button',{type:'button',class:'btn small primary',text:'Save my answer'});
+      var err=h('div',{class:'fb no',hidden:'hidden'});
+      okb.addEventListener('click',function(){
+        if(words(ta.value)<3){ err.textContent='Write a little more first. Try at least 3 words.'; err.hidden=false; return; }
+        n.answer=ta.value.trim(); n.source=src.value.trim(); n.done=true; save(); renderAll();
+      });
+      form.appendChild(ta); form.appendChild(src); form.appendChild(err); form.appendChild(okb);
+      if(n.done){
+        card.appendChild(h('span',{class:'badge ok',text:'✅ Answered'}));
+        card.appendChild(h('p',{class:'ans',text:'Answer: '+n.answer+(n.source?' (Found in: '+n.source+')':'')}));
+        var redo=h('button',{type:'button',class:'nbtn',text:'✏️ Change my answer'}); redo.addEventListener('click',function(){ form.hidden=false; redo.hidden=true; });
+        card.appendChild(redo);
+      } else {
+        var open=h('button',{type:'button',class:'btn small',text:'I found the answer'}); open.addEventListener('click',function(){ form.hidden=false; open.hidden=true; ta.focus(); });
+        card.appendChild(open);
+      }
+      card.appendChild(form); a.appendChild(card);
+    });
+    var c=$('lChecks'); c.innerHTML='';
+    if(!S.k.length) c.appendChild(empty('You have no K notes yet. Go back to K to add some.'));
+    S.k.forEach(function(n){
+      var card=h('div',{class:'note k'}); card.appendChild(h('p',{class:'ntext',text:n.text}));
+      var row=h('div',{class:'checkrow'});
+      [['right','✅ I was right'],['changed','🔄 It changed'],['unsure','❓ Not sure yet']].forEach(function(o){
+        var b=h('button',{type:'button',class:'c','aria-pressed':n.check===o[0]?'true':'false',text:o[1]});
+        b.addEventListener('click',function(){ n.check=o[0]; save(); renderL(); });
+        row.appendChild(b);
+      });
+      card.appendChild(row);
+      if(n.check==='changed'){
+        var ta=h('textarea',{'aria-label':'What I know now',placeholder:'Now I know that…',style:'min-height:64px'}); ta.value=n.newText||'';
+        ta.addEventListener('input',function(){ n.newText=ta.value; save(); });
+        card.appendChild(ta);
+      }
+      c.appendChild(card);
+    });
+    var l=$('lList'); l.innerHTML='';
+    S.l.forEach(function(n){
+      l.appendChild(noteCard(n.text,'l',function(v){ n.text=v; save(); renderAll(); },function(){ S.l=S.l.filter(function(x){ return x!==n; }); save(); renderAll(); }));
+    });
+  }
+
+  /* ---------- the whole chart ---------- */
+  function learnedItems(){
+    var items=[];
+    S.w.forEach(function(n){ if(n.done) items.push({text:'Q: '+n.text+'\nA: '+n.answer+(n.source?' (Found in: '+n.source+')':'')}); });
+    S.k.forEach(function(n){ if(n.check==='changed'&&(n.newText||'').trim()) items.push({text:'I used to think: '+n.text+'\nNow I know: '+n.newText.trim()}); });
+    S.l.forEach(function(n){ items.push({text:n.text}); });
+    return items;
+  }
+  var KMARK={right:'✅ I was right',changed:'🔄 It changed',unsure:'❓ Not sure yet'};
+  function chartColumns(){
+    var k=S.k.map(function(n){ return {text:n.text,badge:n.check?KMARK[n.check]:''}; });
+    var w=S.w.map(function(n){ return {text:n.text,badge:n.done?'✅ Answered':''}; });
+    var l=learnedItems().map(function(n){ return {text:n.text,badge:''}; });
+    return {k:k,w:w,l:l};
+  }
+  function renderChart(){
+    var c=chartColumns(), box=$('chart'); box.innerHTML='';
+    [['k','K: What I Know',c.k],['w','W: What I Want to know',c.w],['l','L: What I Learned',c.l]].forEach(function(col){
+      var d=h('div',{class:'kcol '+col[0]},[h('h4',{text:col[1]})]);
+      if(!col[2].length) d.appendChild(empty('Nothing yet'));
+      col[2].forEach(function(n){
+        var it=h('div',{class:'citem'},[h('p',{text:n.text})]); if(n.badge) it.appendChild(h('span',{class:'badge',text:n.badge})); d.appendChild(it);
+      });
+      box.appendChild(d);
+    });
+    $('chartCount').textContent='I know '+c.k.length+' things. I asked '+c.w.length+' questions and answered '+S.w.filter(function(n){ return n.done; }).length+'. I learned '+c.l.length+' things.';
+  }
+  $('readChart').addEventListener('click',function(){
+    var c=chartColumns();
+    function part(name,arr){ return name+'. '+(arr.length?arr.map(function(n){ return sentence(n.text.replace(/\n/g,' '))+(n.badge?' '+sentence(n.badge):''); }).join(' '):'Nothing yet.'); }
+    speak(part('Know',c.k)+' '+part('Want to know',c.w)+' '+part('Learned',c.l),'q');
+  });
+
+  function renderAll(){ renderK(); renderW(); if(steps[S.step]&&steps[S.step].dataset.phase==='learn') renderL(); if(steps[S.step]&&steps[S.step].dataset.phase==='chart'){ renderChart(); renderChecks(); } progress(); }
+
+  /* ---------- progress and turn-in checks ---------- */
+  function progress(){
+    var n=0; if((S.name||'').trim()) n++; if(S.k.length>=3) n++; if(S.w.length>=3) n++; if(learnedItems().length>=3) n++;
+    $('barfill').style.width=Math.round(n/4*100)+'%';
+    $('ptext').textContent=n+' of 4 parts finished';
+  }
+  function renderChecks(){
+    var ul=$('turnChecks'); ul.innerHTML='';
+    var nm=(S.name||'').trim();
+    [[nm?'My name is at the top of the page':'Add your name at the top of the page',!!nm],
+     ['K: at least 3 things I know ('+S.k.length+' so far)',S.k.length>=3],
+     ['W: at least 3 questions ('+S.w.length+' so far)',S.w.length>=3],
+     ['L: at least 3 things I learned ('+learnedItems().length+' so far)',learnedItems().length>=3]
+    ].forEach(function(c){ ul.appendChild(h('li',{class:c[1]?'ok':'',text:c[0]})); });
+    progress();
+  }
+  $('showShot').addEventListener('click',function(){
+    var box=$('shot'); box.innerHTML=''; box.hidden=false;
+    var nm=(S.name||'').trim(), c=chartColumns();
+    box.appendChild(h('div',{class:'shot-head'},[
+      h('h3',{text:'KWL Chart: Jane Goodall'}),
+      h('div',{text:'Name: '+(nm||'(add your name at the top of the page)')}),
+      h('div',{text:new Date().toLocaleString()})
+    ]));
+    if(!nm) box.appendChild(h('div',{class:'warnbox',text:'Your name is missing. Scroll up, add it, then tap “Show my work” again before you take your screenshot.'}));
+    var grid=h('div',{class:'kwl'});
+    [['k','K: What I Know',c.k],['w','W: What I Want to know',c.w],['l','L: What I Learned',c.l]].forEach(function(col){
+      var d=h('div',{class:'kcol '+col[0]},[h('h4',{text:col[1]})]);
+      if(!col[2].length) d.appendChild(empty('Nothing yet'));
+      col[2].forEach(function(n){ var it=h('div',{class:'citem'},[h('p',{text:n.text})]); if(n.badge) it.appendChild(h('span',{class:'badge',text:n.badge})); d.appendChild(it); });
+      grid.appendChild(d);
+    });
+    box.appendChild(grid);
+    var noted=inkBoxes.filter(function(b){ return S.ink[b.id]&&S.ink[b.id].length; });
+    if(noted.length){
+      box.appendChild(h('div',{class:'shot-item'},[h('b',{text:'My handwriting and drawings'})]));
+      noted.forEach(function(b){
+        var img=inkImage(b.id,700,b.h);
+        if(img) box.appendChild(h('div',{class:'shot-item'},[h('b',{text:b.label}),img]));
+      });
+    }
+    box.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  (function(){
+    var url=CANVAS_URL, q=null;
+    try{ q=new URLSearchParams(location.search).get('canvas'); }catch(e){}
+    if(!url&&q) url=q;
+    var a=$('canvasLink');
+    if(url&&/^https:\/\//i.test(url)){ a.href=url; a.hidden=false; }
+  })();
+
+  /* ---------- clear ---------- */
+  var cb=$('clearAll'), ct=null;
+  cb.addEventListener('click',function(){
+    if(cb.dataset.armed){ try{ localStorage.removeItem(KEY); }catch(e){} location.reload(); }
+    else{ cb.dataset.armed='1'; cb.textContent='Click again to erase everything'; ct=setTimeout(function(){ delete cb.dataset.armed; cb.textContent='Clear my work'; },4000); }
+  });
+
+  /* ---------- init ---------- */
+  renderK(); renderW(); progress(); info(); initInk();
+  show(S.step||0);
+})();
+</script>
+</body>
+</html>
